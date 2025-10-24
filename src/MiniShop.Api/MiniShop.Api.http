@@ -1,6 +1,52 @@
-@MiniShop.Api_HostAddress = http://localhost:5296
+@host = http://localhost:5296
+@json = application/json
+@id = 00000000-0000-0000-0000-000000000000
 
-GET {{MiniShop.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+### List (paged)
+GET {{host}}/api/products?page=1&size=20
+Accept: {{json}}
 
-###
+### Get by id
+GET {{host}}/api/products/{{id}}
+Accept: {{json}}
+
+### Create
+POST {{host}}/api/products
+Content-Type: {{json}}
+Accept: {{json}}
+
+{
+  "name": "Test product",
+  "sku": "SKU-0001",
+  "price": 19.99,
+  "stock": 5,
+  "description": "demo"
+}
+
+### Update
+PUT {{host}}/api/products/{{id}}
+Content-Type: {{json}}
+Accept: {{json}}
+
+{
+  "name": "Test product (updated)",
+  "sku": "SKU-0001",
+  "price": 24.99,
+  "stock": 10,
+  "description": "demo+"
+}
+
+### Activate
+POST {{host}}/api/products/{{id}}/activate?active=true
+
+### Deactivate
+POST {{host}}/api/products/{{id}}/activate?active=false
+
+### Soft delete
+DELETE {{host}}/api/products/{{id}}
+
+### Hard delete (admin later)
+DELETE {{host}}/api/products/{{id}}?hard=true
+
+### Restore
+POST {{host}}/api/products/{{id}}/restore
